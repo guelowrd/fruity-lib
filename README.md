@@ -2,6 +2,8 @@
 
 A demo repo for showing how to publish a Noir library.
 
+Notice in `/.github/workflows/test.yml` that it is really easy to incorporate automated testing to your library so you never release broken code. 🙂 🚀
+
 ## Create your own library
 
 1. Create a file called `lib.nr` in `./src` containing the code for the Noir library. The functions in this file will be available to anyone that imports the library into their project.
