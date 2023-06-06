@@ -2,7 +2,7 @@
 
 A demo repo for showing how to publish a Noir library.
 
-## Create your own
+## Create your own library
 
 1. Create a file called `lib.nr` in `./src` containing the code for the Noir library. The functions in this file will be available to anyone that imports the library into their project.
 2. Create a release on Github. See [these](https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository) instructions.
@@ -10,7 +10,7 @@ A demo repo for showing how to publish a Noir library.
 
 ## Using the library
 
-1. Add the library to your Noir project dependencies in the Nargo.toml file.
+1. Add the library to your Noir project dependencies in the `Nargo.toml` file.
 
 ```toml
 [dependencies]
@@ -29,6 +29,6 @@ fn main(){
     std::println(new_array[0]);
     // ...
 }
-
+```
 
 Credit to @colinnielsen for the example function.
