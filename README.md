@@ -1,14 +1,9 @@
-# Noir library Demo
+# Noir library by @madztheo & @guelowrd (aka Fruity Friends, aka Wagmi Labs)
 
-A demo repo for showing how to publish a Noir library.
-
-Notice in `/.github/workflows/test.yml` that it is really easy to incorporate automated testing to your library so you never release broken code. 🙂 🚀
-
-## Create your own library
-
-1. Create a file called `lib.nr` in `./src` containing the code for the Noir library. The functions in this file will be available to anyone that imports the library into their project.
-2. Create a release on Github. See [these](https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository) instructions.
-3. That's it! Anyone can now use your library in their Noir project.
+A public Noir library repo containing useful Noir functions we've implemented and we're using in our apps:
+1. Proof of Intersection
+2. Proof of Proximity (TBD)
+3. Proof of Proper Secret (TBD)
 
 ## Using the library
 
@@ -16,21 +11,21 @@ Notice in `/.github/workflows/test.yml` that it is really easy to incorporate au
 
 ```toml
 [dependencies]
-demo_lib = {tag = "v0.1", git = "https://github.com/critesjosh/noir-lib-demo"}
+fruity_lib = {tag = "v0.1", git = "https://github.com/guelowrd/fruity-lib"}
 ```
 
-2. Import the library into your Noir code.
+2. Import the library and function into your Noir code.
 
 ```rust
 use dep::std;
-use dep::demo_lib;
+use dep::fruity_lib;
 
 fn main(){
     // ...
-    let new_array = demo_lib::coordinates_to_u64_array(pub_key_x, pub_key_y);
-    std::println(new_array[0]);
+    let it_s_a_match = fruity_lib::private_set_intersection_is_not_empty(commitment_a, commitment_b, priv_set_a, priv_set_b);
+    std::println(it_s_a_match);
     // ...
 }
 ```
 
-Credit to @colinnielsen for the example function.
+Credit to @critesjosh for the public Noir library demo (https://github.com/critesjosh/noir-lib-demo).
