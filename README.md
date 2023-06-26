@@ -1,5 +1,4 @@
-# Noir library by Wagmi Labs
-### Wagmi Labs aka @madztheo & @guelowrd, creators of Fruity Friends
+# Noir library by Wagmi Labs*
 
 A public Noir library repo containing useful Noir functions we've implemented and we're using in our apps:
 1. Proof of Intersection
@@ -29,5 +28,6 @@ fn main(){
 }
 ```
 
-
 Credit to @critesjosh for [the public Noir library demo](https://github.com/critesjosh/noir-lib-demo).
+
+**(Wagmi Labs == [@madztheo](https://github.com/madztheo) & [@guelowrd](https://github.com/guelowrd), creators of [Fruity Friends](https://github.com/madztheo/zk-fruits-front-end))*
