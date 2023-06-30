@@ -25,26 +25,27 @@ fn get_intersection_cardinality(private_set_a : [Field; MAX_ARRAY_SIZE], private
     cardinality
 }
 
+// @dev Checks that the intersection of two private sets is non-empty.
+// @param commitment_a A pedersen hash of the first set of hashed elements
+// serving as a public commitment to the first set
+// @param commitment_b A pedersen hash of the second set of hashed elements
+// serving as a public commitment to the second set
+// @param private_set_a First set of hashed elements (can be any hash function)
+// @param private_set_b Second set of hashed elements (can be any hash function)
+// @param intersection_is_empty A boolean indicating whether we want to check the intersection is empty or non-empty.
+// of the two private sets is empty or not
+// @dev The function first checks that the commitments, then compute the cardinality of the intersection of the two sets, and finally asserts that this cardinality is empty or not (depending on intersection_is_empty input).
+// @notice If you use the function in your project, make sure the commitments `pub_commitment_a` & `pub_commitment_b` and the emptyness to check `intersection_is_empty` are public inputs.
 fn check_private_set_intersection(
-    // A pedersen hash of the first set of hashed elements
-    // serving as a public commitment to the first set
     commitment_a: Field, 
-    // A pedersen hash of the second set of hashed elements
-    // serving as a public commitment to the second set
     commitment_b: Field, 
-    // First set of hashed elements (can be any hash function)
     private_set_a: [Field; MAX_ARRAY_SIZE], 
-    // Second set of hashed elements (can be any hash function)
     private_set_b: [Field; MAX_ARRAY_SIZE],
-    // Second set of hashed elements (can be any hash function)
     intersection_is_empty: bool
 ) {
-    // Check that the commitments are valid
     check_commitment(commitment_a, private_set_a);
     check_commitment(commitment_b, private_set_b);
-    // Retrieve the cardinality of the intersection, if there is any
     let cardinality = get_intersection_cardinality(private_set_a, private_set_b);
-    // Make sure the proof will only succeed if the intersection is non-empty
     if intersection_is_empty {
         assert(cardinality == 0);
     } else {
