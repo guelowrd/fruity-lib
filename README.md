@@ -2,12 +2,13 @@
 
 A public Noir library repo containing useful Noir functions we've implemented and we're using in our apps:
 1. Proof of Intersection
-2. Proof of Proximity (in progress)
+2. Proof of Proximity
 3. Proof of Proper Secret (TBD)
 
 ## Examples
 
-1. An example of how to use the Proof of Intersection function `fruity_lib::check_private_set_intersection` is available in `check_psi/`.
+1. An example of how to use the Proof of Intersection function `fruity_lib::check_private_set_intersection` is available in `examples/proof-of-intersection/`.
+2. An example of how to use the Proof of Proximity function `fruity_lib::check_points_proximity` is available in `examples/proof-of-proximity/`.
 
 ## Using the library
 
@@ -15,11 +16,12 @@ A public Noir library repo containing useful Noir functions we've implemented an
 
 ```toml
 [dependencies]
-fruity_lib = {tag = "v1.0.1", git = "https://github.com/guelowrd/fruity-lib"}
+fruity_lib = {tag = "v1.1.2", git = "https://github.com/guelowrd/fruity-lib"}
 ```
 
 2. Import the library and function into your Noir code.
 
+Example (taken from proof-of-intersection):
 ```rust
 use dep::std;
 use dep::fruity_lib;
