@@ -2,7 +2,7 @@
 
 A public Noir library repo containing useful Noir functions we've implemented and we're using in our apps:
 1. Proof of Intersection
-2. Proof of Proximity (TBD)
+2. Proof of Proximity (in progress)
 3. Proof of Proper Secret (TBD)
 
 ## Examples
