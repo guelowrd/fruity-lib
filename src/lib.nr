@@ -119,11 +119,11 @@ fn check_points_proximity(
     private_point_b: Point,
     distance_threshold: Field
 ) {
-    assert(distance_threshold > 0);
+    assert(distance_threshold as u64 > 0);
     check_commitment_of_point(commitment_a, private_point_a);
     check_commitment_of_point(commitment_b, private_point_b);
-    let distance_squared = get_euclidean_distance_squared(private_point_a, private_point_b) as u64;
-    let distance_threshold_squared = (distance_threshold * distance_threshold) as u64;
+    let distance_squared: u64 = get_euclidean_distance_squared(private_point_a, private_point_b) as u64;
+    let distance_threshold_squared: u64 = (distance_threshold * distance_threshold) as u64;
     assert(distance_squared < distance_threshold_squared);
 }
 
