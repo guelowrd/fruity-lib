@@ -1,0 +1,6 @@
+[package]
+authors = [""]
+compiler_version = "0.6.0"
+
+[dependencies]
+fruity_lib = {tag = "v1.1.1", git = "https://github.com/guelowrd/fruity-lib"}

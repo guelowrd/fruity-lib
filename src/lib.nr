@@ -196,12 +196,17 @@ fn test_check_porto_to_lisbon_distance_is_below_300km() {
     // - Shift the latitude/longitude by 84,556,994,972,073,632µm/40,515,308,731,945,865µm to avoid negative numbers (see note 3 -- note it can be any number, as long as the two points are shifted by the same vector).
     // - Check that the distance between Porto and Lisbon is below 300km (cognizant of note 2).
     let porto_lat = 84561568048516672; // 41.147360° * 111,139,000,000µm + 84,556,994,972,073,632µm shift = 84,561,568,048,516,672µm
+    std::println(porto_lat);
     let porto_long = 40514348451309242; // -8.640357° * 111,139,000,000µm + 40,515,308,731,945,865µm shift = 40,514,348,451,309,242µm
+    std::println(porto_long);
     let lisbon_lat = 84561294895305754; // 38.689598° * 111,139,000,000µm + 84,556,994,972,073,632µm shift = 84,561,294,895,305,754µm
+    std::println(lisbon_lat);
     let lisbon_long = 40514288800674023; // -9.177078° * 111,139,000,000µm + 40,515,308,731,945,865µm shift = 40,514,288,800,674,023µm
+    std::println(lisbon_long);
     let point_a = coordinates_to_point(porto_lat, porto_long, 0);
     let point_b = coordinates_to_point(lisbon_lat, lisbon_long, 0);
     let distance_threshold = 300000000000; // 300km
+    std::println(distance_threshold);
     let commitment_a = get_commitment_of_point(point_a);
     std::println(commitment_a);
     let commitment_b = get_commitment_of_point(point_b);
@@ -211,17 +216,7 @@ fn test_check_porto_to_lisbon_distance_is_below_300km() {
 
 #[test]
 fn test_check_lisbon_to_porto_distance_is_below_300km() {
-    // In this test we work with latitudes/longitudes of two points on Earth, and check their distance is below a given threshold.
-    // Our first point is Ponte da Arrábida in Porto: latitude = 41.147360, longitude = -8.640357
-    // Our second point is Ponte 25 de Abril in Lisbon: latitude = 38.689598, longitude = -9.177078
-    // Note 1: Each degree (latitude or longitude) the radius line of the Earth sweeps out corresponds to 111,139 meters.
-    // Note 2: Technically Earth is (almost) a sphere so using Pythagore's theorem <=> Euclidean distance isn't completely accurate, but impact is less than about 1% for distance below 500km or so.
-    // Note 3: We are shifting the longitudes to avoid negative numbers -- in a real use case, best is to use a private translation vector to translate the points.
-    // Note 4: We'll work in micrometers since Noir doesn't do floating point arithmetic.
-    // To sum up, what is done here in this test is:
-    // - Convert the latitudes/longitudes of our 2 points to cartesians coordinates (in micrometers) on a 2D plan by multiplying them by 111,139,000,000 (see note 1 & 4 above, with 111,139 meters = 111,139,000,000 µm).
-    // - Shift the latitude/longitude by 84,556,994,972,073,632µm/40,515,308,731,945,865µm to avoid negative numbers (see note 3 -- note it can be any number, as long as the two points are shifted by the same vector).
-    // - Check that the distance between Porto and Lisbon is below 300km (cognizant of note 2).
+    // Just inverting the position of the two points in the previous test, making sure there's no sign error.
     let porto_lat = 84561568048516672; // 41.147360° * 111,139,000,000µm + 84,556,994,972,073,632µm shift = 84,561,568,048,516,672µm
     let porto_long = 40514348451309242; // -8.640357° * 111,139,000,000µm + 40,515,308,731,945,865µm shift = 40,514,348,451,309,242µm
     let lisbon_lat = 84561294895305754; // 38.689598° * 111,139,000,000µm + 84,556,994,972,073,632µm shift = 84,561,294,895,305,754µm
