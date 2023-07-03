@@ -3,4 +3,4 @@ authors = [""]
 compiler_version = "0.6.0"
 
 [dependencies]
-fruity_lib = {tag = "v1.1.3", git = "https://github.com/guelowrd/fruity-lib"}
+fruity_lib = {tag = "v1.1.4", git = "https://github.com/guelowrd/fruity-lib"}
