@@ -1,5 +1,7 @@
 use dep::std;
 
+global MAX_VALUE_FOR_DISTANCE_SQUARED: u64 = 21888242871839275222246405745257275088548364400416034343698204186575808495617;
+
 //////////////////////////////////
 // Euclidean Distance Functions //
 //////////////////////////////////
@@ -61,11 +63,13 @@ fn check_points_proximity(
     private_point_b: Point,
     distance_threshold: Field
 ) {
-    assert(distance_threshold as u64 > 0); // need to cast as u64 to avoid bug when using the library in a project
+    assert(distance_threshold as u64 > 0);
     check_commitment_of_point(commitment_a, private_point_a);
     check_commitment_of_point(commitment_b, private_point_b);
     let distance_squared: u64 = get_euclidean_distance_squared(private_point_a, private_point_b) as u64;
     let distance_threshold_squared: u64 = (distance_threshold * distance_threshold) as u64;
+    assert(distance_squared < MAX_VALUE_FOR_DISTANCE_SQUARED - 1); // Make sure we don't overflow.
+    assert(distance_threshold_squared < MAX_VALUE_FOR_DISTANCE_SQUARED - 1); // Make sure we don't overflow.
     assert(distance_squared < distance_threshold_squared);
 }
 
@@ -134,4 +138,9 @@ fn test_check_lisbon_to_porto_distance_is_below_300km() {
     let commitment_a = get_commitment_of_point(point_a);
     let commitment_b = get_commitment_of_point(point_b);
     check_points_proximity(commitment_b, commitment_a, point_b, point_a, distance_threshold);
+}
+
+#[test]
+fn test_is_BN254() {
+    assert(MAX_VALUE_FOR_DISTANCE_SQUARED == 0);
 }
