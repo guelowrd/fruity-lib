@@ -29,9 +29,9 @@ fn main(
     threshold: pub Field
 ){
     // ...
-    let pointA = fruity_lib::coordinates_to_point(latitudeA, longitudeA, 0);
-    let pointB = fruity_lib::coordinates_to_point(latitudeB, longitudeB, 0);
-    fruity_lib::check_points_proximity(commitmentA, commitmentB, pointA, pointB, threshold);
+    let pointA = fruity_lib::proof_of_proximity::coordinates_to_point(latitudeA, longitudeA, 0);
+    let pointB = fruity_lib::proof_of_proximity::coordinates_to_point(latitudeB, longitudeB, 0);
+    fruity_lib::proof_of_proximity::check_points_proximity(commitmentA, commitmentB, pointA, pointB, threshold);
     std::println("They're close enough!");
     // ...
 }

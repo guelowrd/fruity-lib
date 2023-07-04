@@ -16,7 +16,7 @@ fn main(
     isNotEmpty: pub bool
 ){
     // ...
-    fruity_lib::check_private_set_intersection(commitmentA, commitmentB, setA, setB, !isNotEmpty);
+    fruity_lib::proof_of_intersection::check_private_set_intersection(commitmentA, commitmentB, setA, setB, !isNotEmpty);
     std::println("It's a match!");
     // ...
 }
