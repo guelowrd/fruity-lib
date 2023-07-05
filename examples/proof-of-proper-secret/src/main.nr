@@ -1,7 +1,7 @@
 use dep::std;
 
-global const SECRET_INPUT_LENGTH = 12;
-global const ORDERED_HASHED_ASCII_CODES_DIGIT_CHARS = [
+global SECRET_INPUT_LENGTH = 12;
+global ORDERED_HASHED_ASCII_CODES_DIGIT_CHARS = [
     0x01388b9a8a054cc2d19939ea0c8bca387d9089244d78fb5da96a8a961945ac08,
     0x034fc2eff5ea29664523402aec82d39bae64c8120c1f30dac99ff24a73eb8ab6,
     0x0b6b02147b74321d00aca053627f131e5be0dc4b13163f6d335a8071a0f95261,
@@ -14,7 +14,23 @@ global const ORDERED_HASHED_ASCII_CODES_DIGIT_CHARS = [
     0x2e3a3b844eb35871138aca89a1462913730a050531ad23baa66410f25e51765d
 ];
 
-fn main(x: [Field; SECRET_INPUT_LENGTH]) {
+global ORDERED_ARRAY = [
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+];
+
+fn main(x: Field) {
+    let mut has_digit: bool = false;
+    for i in 0..9 {
+        let compare_value = ORDERED_ARRAY[i];
+        std::println(compare_value);
+        let x_smaller_than_compare_value = x as u64 < compare_value as u64;
+        std::println(x_smaller_than_compare_value);
+        has_digit |= x_smaller_than_compare_value;
+    }
+    assert(has_digit);
+}
+
+fn main2(secret_input: [Field; SECRET_INPUT_LENGTH]) {
     let nb_digit_chars = ORDERED_HASHED_ASCII_CODES_DIGIT_CHARS.len();
     let nb_digit_chars_half = nb_digit_chars / 2;
     let mut has_digit: bool = false;
@@ -54,22 +70,22 @@ fn main(x: [Field; SECRET_INPUT_LENGTH]) {
 
 #[test]
 fn test_main() {
-    let x: [Field; SECRET_INPUT_LENGTH] = [
-        0x0b6d6f69b140cf67a585978ac44100fd7ee62bbacfd2c32c02661858af059c8e,
-        0x0b6d6f69b140cf67a585978ac44100fd7ee62bbacfd2c32c02661858af059c8e,
-        0x0b6d6f69b140cf67a585978ac44100fd7ee62bbacfd2c32c02661858af059c8e,
-        0x0b6d6f69b140cf67a585978ac44100fd7ee62bbacfd2c32c02661858af059c8e,
-        0x0b6d6f69b140cf67a585978ac44100fd7ee62bbacfd2c32c02661858af059c8e,
-        0x0b6d6f69b140cf67a585978ac44100fd7ee62bbacfd2c32c02661858af059c8e,
-        0x0b6d6f69b140cf67a585978ac44100fd7ee62bbacfd2c32c02661858af059c8e,
-        0x0b6d6f69b140cf67a585978ac44100fd7ee62bbacfd2c32c02661858af059c8e,
-        0x0b6d6f69b140cf67a585978ac44100fd7ee62bbacfd2c32c02661858af059c8e,
-        0x0b6d6f69b140cf67a585978ac44100fd7ee62bbacfd2c32c02661858af059c8e,
-        0x0b6d6f69b140cf67a585978ac44100fd7ee62bbacfd2c32c02661858af059c8e,
-        0x2e3a3b844eb35871138aca89a1462913730a050531ad23baa66410f25e51765d
-    ];
-    main(x);
-
+    // let x: [Field; SECRET_INPUT_LENGTH] = [
+    //     0x0b6d6f69b140cf67a585978ac44100fd7ee62bbacfd2c32c02661858af059c8e,
+    //     0x0b6d6f69b140cf67a585978ac44100fd7ee62bbacfd2c32c02661858af059c8e,
+    //     0x0b6d6f69b140cf67a585978ac44100fd7ee62bbacfd2c32c02661858af059c8e,
+    //     0x0b6d6f69b140cf67a585978ac44100fd7ee62bbacfd2c32c02661858af059c8e,
+    //     0x0b6d6f69b140cf67a585978ac44100fd7ee62bbacfd2c32c02661858af059c8e,
+    //     0x0b6d6f69b140cf67a585978ac44100fd7ee62bbacfd2c32c02661858af059c8e,
+    //     0x0b6d6f69b140cf67a585978ac44100fd7ee62bbacfd2c32c02661858af059c8e,
+    //     0x0b6d6f69b140cf67a585978ac44100fd7ee62bbacfd2c32c02661858af059c8e,
+    //     0x0b6d6f69b140cf67a585978ac44100fd7ee62bbacfd2c32c02661858af059c8e,
+    //     0x0b6d6f69b140cf67a585978ac44100fd7ee62bbacfd2c32c02661858af059c8e,
+    //     0x0b6d6f69b140cf67a585978ac44100fd7ee62bbacfd2c32c02661858af059c8e,
+    //     0x2e3a3b844eb35871138aca89a1462913730a050531ad23baa66410f25e51765d
+    // ];
+    let y: Field = 7;
+    main(y);
     // Uncomment to make test fail
     // main(1, 1);
 }
