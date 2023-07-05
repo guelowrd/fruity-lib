@@ -6,28 +6,6 @@ use dep::std;
 
 global MAX_ARRAY_SIZE_FOR_PSI: Field = 20;
 
-fn get_max_array_size_for_psi() -> Field {
-    MAX_ARRAY_SIZE_FOR_PSI
-}
-
-fn check_commitment_of_private_set(commitment: Field, set: [Field; MAX_ARRAY_SIZE_FOR_PSI]) {
-    let computed_commitment = std::hash::pedersen(set);
-    assert(commitment == computed_commitment[0]);
-}
-
-fn get_intersection_cardinality(private_set_a : [Field; MAX_ARRAY_SIZE_FOR_PSI], private_set_b : [Field; MAX_ARRAY_SIZE_FOR_PSI]) -> Field {
-    let mut cardinality: Field = 0;
-    for i in 0..MAX_ARRAY_SIZE_FOR_PSI {
-        for j in 0..MAX_ARRAY_SIZE_FOR_PSI {
-            // We only need to check that private_set_a[i] != 0, as if this condition holds then private_set_a[i] == private_set_b[j] implies that private_set_b[j] != 0.
-            if (private_set_a[i] != 0) & (private_set_a[i] as u64 == private_set_b[j] as u64) {
-                cardinality += 1;
-            }
-        }
-    }
-    cardinality
-}
-
 // @dev Checks that the intersection of two private sets is non-empty.
 // @param commitment_a A Pedersen hash of the first set of hashed elements serving as a public commitment to the first set.
 // @param commitment_b A Pedersen hash of the second set of hashed elements serving as a public commitment to the second set.
@@ -51,6 +29,28 @@ fn check_private_set_intersection(
     } else {
         assert(cardinality != 0);
     }
+}
+
+fn get_max_array_size_for_psi() -> Field {
+    MAX_ARRAY_SIZE_FOR_PSI
+}
+
+fn check_commitment_of_private_set(commitment: Field, set: [Field; MAX_ARRAY_SIZE_FOR_PSI]) {
+    let computed_commitment = std::hash::pedersen(set);
+    assert(commitment == computed_commitment[0]);
+}
+
+fn get_intersection_cardinality(private_set_a : [Field; MAX_ARRAY_SIZE_FOR_PSI], private_set_b : [Field; MAX_ARRAY_SIZE_FOR_PSI]) -> Field {
+    let mut cardinality: Field = 0;
+    for i in 0..MAX_ARRAY_SIZE_FOR_PSI {
+        for j in 0..MAX_ARRAY_SIZE_FOR_PSI {
+            // We only need to check that private_set_a[i] != 0, as if this condition holds then private_set_a[i] == private_set_b[j] implies that private_set_b[j] != 0.
+            if (private_set_a[i] != 0) & (private_set_a[i] as u64 == private_set_b[j] as u64) {
+                cardinality += 1;
+            }
+        }
+    }
+    cardinality
 }
 
 //////////////

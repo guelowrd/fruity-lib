@@ -12,6 +12,31 @@ struct Point {
     z: Field
 }
 
+// @dev Checks that the distance between two points is below a given threshold.
+// @param commitment_a A Pedersen hash of the first point serving as a public commitment to the first point.
+// @param commitment_b A Pedersen hash of the second point serving as a public commitment to the second point.
+// @param private_point_a First point (should have been translated by a private translation vector before calling this function if privacy is required).
+// @param private_set_b Second point (should have been translated by a private translation vector before calling this function if privacy is required).
+// @param distance_threshold Distance between the two points will be compared to this threshold value -- function returns true if distance < threshold, else returns false.
+// @dev The function first checks the commitments, then compute the square of the distance between the two points, and finally asserts that the square of the distance is below the square of the threshold.
+// @notice If you use the function in your project, make sure the commitments `commitment_a` & `commitment_b` are public inputs.
+fn check_points_proximity(
+    commitment_a: Field, 
+    commitment_b: Field, 
+    private_point_a: Point, 
+    private_point_b: Point,
+    distance_threshold: Field
+) {
+    assert(distance_threshold as u64 > 0);
+    check_commitment_of_point(commitment_a, private_point_a);
+    check_commitment_of_point(commitment_b, private_point_b);
+    let distance_squared: u64 = get_euclidean_distance_squared(private_point_a, private_point_b) as u64;
+    let distance_threshold_squared: u64 = (distance_threshold * distance_threshold) as u64;
+    assert(distance_squared < MAX_VALUE_FOR_DISTANCE_SQUARED - 1); // Make sure we don't overflow.
+    assert(distance_threshold_squared < MAX_VALUE_FOR_DISTANCE_SQUARED - 1); // Make sure we don't overflow.
+    assert(distance_squared < distance_threshold_squared);
+}
+
 fn translate_point(point: Point, translation_vector: Point) -> Point {
     let translated_point = Point {
         x: point.x + translation_vector.x,
@@ -48,30 +73,6 @@ fn check_commitment_of_point(commitment: Field, point: Point) {
     assert(commitment == computed_commitment);
 }
 
-// @dev Checks that the distance between two points is below a given threshold.
-// @param commitment_a A Pedersen hash of the first point serving as a public commitment to the first point.
-// @param commitment_b A Pedersen hash of the second point serving as a public commitment to the second point.
-// @param private_point_a First point (should have been translated by a private translation vector before calling this function if privacy is required).
-// @param private_set_b Second point (should have been translated by a private translation vector before calling this function if privacy is required).
-// @param distance_threshold Distance between the two points will be compared to this threshold value -- function returns true if distance < threshold, else returns false.
-// @dev The function first checks the commitments, then compute the square of the distance between the two points, and finally asserts that the square of the distance is below the square of the threshold.
-// @notice If you use the function in your project, make sure the commitments `commitment_a` & `commitment_b` are public inputs.
-fn check_points_proximity(
-    commitment_a: Field, 
-    commitment_b: Field, 
-    private_point_a: Point, 
-    private_point_b: Point,
-    distance_threshold: Field
-) {
-    assert(distance_threshold as u64 > 0);
-    check_commitment_of_point(commitment_a, private_point_a);
-    check_commitment_of_point(commitment_b, private_point_b);
-    let distance_squared: u64 = get_euclidean_distance_squared(private_point_a, private_point_b) as u64;
-    let distance_threshold_squared: u64 = (distance_threshold * distance_threshold) as u64;
-    assert(distance_squared < MAX_VALUE_FOR_DISTANCE_SQUARED - 1); // Make sure we don't overflow.
-    assert(distance_threshold_squared < MAX_VALUE_FOR_DISTANCE_SQUARED - 1); // Make sure we don't overflow.
-    assert(distance_squared < distance_threshold_squared);
-}
 
 /////////////////////////////////
 // 2. Euclidean Distance Tests //
