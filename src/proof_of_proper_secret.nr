@@ -1,7 +1,11 @@
 use dep::std;
 
-global SECRET_INPUT_LENGTH = 12;
-global DIGIT_CHARS_ASCII_CODES_HASHED = [
+///////////////////////////////////////
+// 1. Proper Secret String Functions //
+///////////////////////////////////////
+
+global SECRET_INPUT_LENGTH = 20;
+global DIGIT_CHARS_ASCII_CODES_HASHED = [ // 0 to 9
     0x1e526c4a192f3f6a79f85b4da6a98ba8ecc091bb486d1b45a3ff24ce3426c9b9,
     0x0b6b02147b74321d00aca053627f131e5be0dc4b13163f6d335a8071a0f95261,
     0x01388b9a8a054cc2d19939ea0c8bca387d9089244d78fb5da96a8a961945ac08,
@@ -13,7 +17,7 @@ global DIGIT_CHARS_ASCII_CODES_HASHED = [
     0x2e3a3b844eb35871138aca89a1462913730a050531ad23baa66410f25e51765d,
     0x0b6d6f69b140cf67a585978ac44100fd7ee62bbacfd2c32c02661858af059c8e
 ];
-global LOWERCASE_CHARS_ASCII_CODES_HASHED = [
+global LOWERCASE_CHARS_ASCII_CODES_HASHED = [ // a to z
     0x2bc4bb39989fedfe614e3ecb1459abf29c1a7c0d5f1a6198ca666a7681127a2e,
     0x194c151fb80ae36f8738a1f1480eef6d2edd6a8d3b4ec50c7247cad56f911894,
     0x2d4829f45093c93d319654f920e83f28ea332ef2dbbda4bf4fe1a957f83cef0c,
@@ -41,7 +45,7 @@ global LOWERCASE_CHARS_ASCII_CODES_HASHED = [
     0x29bb1950faffed939e244e9eb11f20cfeeef657f2a62aaebccccb9369edb53b7,
     0x2a902a1f449d7349ee0ea36e260d19a1a63fbe9ae3e5d7524540189de9eaf9cd
 ];
-global UPPERCASE_CHARS_ASCII_CODES_HASHED = [
+global UPPERCASE_CHARS_ASCII_CODES_HASHED = [ // A to Z
     0x03cf9f0c8f51a1fd00f1a95b56620013eaa81a772152d5c44367037a902b96fe,
     0x0b569b3ad90b372b5975ed9dfadd657df487df7bcf3927457c743d8d016580f1,
     0x0294130836e25f4fa29e92d5681128f03d7b618619c5c3b65c6352520158aa02,
@@ -104,14 +108,18 @@ global SPECIAL_CHARS_ASCII_CODES_HASHED = [
     0x2c4c41588a752611fcdafa8762309149af9cb49fd71a7eec360f5332a7c0df2f  // ~ tilde
 ];
 
-fn check_secret_is_proper(secret_input: [Field; SECRET_INPUT_LENGTH], nb_of_char_types_required: Field) {
+// @dev Checks that a given secret input (password) respects enough criteria (amongst: at least one digit, at least one lowercase, at least one uppercase, at least one special char).
+// @param private_secret_input The private secret input to inspect, as an array of Pedersen hashes of the chars.
+// @param nb_of_char_types_required Number between 1 and 4 specifying how many char types are required amongst digit, lowercase, uppercase and special char.
+// @notice If you use the function in your project, make sure the input `private_secret_input` is a private input.
+fn check_secret_is_proper(private_secret_input: [Field; SECRET_INPUT_LENGTH], nb_of_char_types_required: Field) {
     let mut has_digit: bool = false;
     let mut has_lowercase: bool = false;
     let mut has_uppercase: bool = false;
     let mut has_specialchar: bool = false;
     let mut current_char: Field = 0;
     for i in 0..SECRET_INPUT_LENGTH {
-        current_char = secret_input[i];
+        current_char = private_secret_input[i];
         has_digit |= is_char_a_digit(current_char);
         has_lowercase |= is_char_a_lowercase(current_char);
         has_uppercase |= is_char_a_uppercase(current_char);
@@ -146,21 +154,36 @@ fn is_field_in_array<N>(field: Field, array: [Field; N]) -> bool {
     is_field_in_array
 }
 
+////////////////////////////
+// 2. Proper Secret Tests //
+////////////////////////////
+
 #[test]
 fn test_check_secret_is_proper() {
     let x: [Field; SECRET_INPUT_LENGTH] = [
-        0x0b6d6f69b140cf67a585978ac44100fd7ee62bbacfd2c32c02661858af059c8e,
-        0x0b6d6f69b140cf67a585978ac44100fd7ee62bbacfd2c32c02661858af059c8e,
-        0x0b6d6f69b140cf67a585978ac44100fd7ee62bbacfd2c32c02661858af059c8e,
-        0x0b6d6f69b140cf67a585978ac44100fd7ee62bbacfd2c32c02661858af059c8e,
-        0x0b6d6f69b140cf67a585978ac44100fd7ee62bbacfd2c32c02661858af059c8e,
-        0x0b6d6f69b140cf67a585978ac44100fd7ee62bbacfd2c32c02661858af059c8e,
-        0x0b6d6f69b140cf67a585978ac44100fd7ee62bbacfd2c32c02661858af059c8e,
-        0x0b6d6f69b140cf67a585978ac44100fd7ee62bbacfd2c32c02661858af059c8e,
-        0x0b6d6f69b140cf67a585978ac44100fd7ee62bbacfd2c32c02661858af059c8e,
-        0x0b6d6f69b140cf67a585978ac44100fd7ee62bbacfd2c32c02661858af059c8e,
-        0x1a3b00bd79bad5789ae13e4f11ca04709c685e94788f2c258e6411c8201d0186,
-        0x2bc4bb39989fedfe614e3ecb1459abf29c1a7c0d5f1a6198ca666a7681127a2e
+        0x0e23ab9f4d077373f5dd1e06e65a42ae23c0d9856126bc131a091fa2e0bd0e1c, // 'I' char
+        0x06259a629d9eda880218afbdff67600e907144901aab7e6735b80bd8969cecad, // '_' char
+        0x03331a6c6a82d7d4d9ed03bae70d39991dacc3cd93742c6750db416d31d49bb9, // '<' char
+        0x034fc2eff5ea29664523402aec82d39bae64c8120c1f30dac99ff24a73eb8ab6, // '3' char
+        0x06259a629d9eda880218afbdff67600e907144901aab7e6735b80bd8969cecad, // '_' char
+        0x201a8ea4e78ecc2e6f5c55b1a3e9e430db82c8fc6cbf46af4674d3c956437ef8, // 'p' char
+        0x2bc4bb39989fedfe614e3ecb1459abf29c1a7c0d5f1a6198ca666a7681127a2e, // 'a' char
+        0x2ac4e33de9876873c93bc790c1b3ed01800ea98459dc786d921df830755eee1e, // 's' char
+        0x1be43ae9ae5f0b01a507385db6f27e33e1cf5134ec652254362a5d34e56c09a5, // 't' char
+        0x2ced7a1e5259f39113165179820c949a6c1dddbd5ab404e4f876e1b94e0c686a, // 'e' char
+        0x1331051e6aeedf737c007b0f5341ee9b1ad3db59b5e585289c99b1f3ad65fc23, // 'i' char
+        0x2ac4e33de9876873c93bc790c1b3ed01800ea98459dc786d921df830755eee1e, // 's' char
+        0x06259a629d9eda880218afbdff67600e907144901aab7e6735b80bd8969cecad, // '_' char
+        0x14ec7c744f563a9b337121af1d454700c52b9008b4c522fe7c10bbb4229a2eaa, // 'd' char
+        0x2ced7a1e5259f39113165179820c949a6c1dddbd5ab404e4f876e1b94e0c686a, // 'e' char
+        0x06259a629d9eda880218afbdff67600e907144901aab7e6735b80bd8969cecad, // '_' char
+        0x02729cbddd4ec32f79556df47ee2f6ef5fb341fb98823872450fda675a06d81c, // 'n' char
+        0x2bc4bb39989fedfe614e3ecb1459abf29c1a7c0d5f1a6198ca666a7681127a2e, // 'a' char
+        0x1be43ae9ae5f0b01a507385db6f27e33e1cf5134ec652254362a5d34e56c09a5, // 't' char
+        0x2bc4bb39989fedfe614e3ecb1459abf29c1a7c0d5f1a6198ca666a7681127a2e  // 'a' char
     ];
+    check_secret_is_proper(x, 4);
     check_secret_is_proper(x, 3);
+    check_secret_is_proper(x, 2);
+    check_secret_is_proper(x, 1);
 }
