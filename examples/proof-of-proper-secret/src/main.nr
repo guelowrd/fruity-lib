@@ -12,10 +12,10 @@ fn main(
     // 2. at least one lowercase char,
     // 3. at least one uppercase char,
     // 4. at least one special char.
-    isNotEmpty: pub Field
+    nb_of_char_types_required: pub Field
 ){
     // ...
-    fruity_lib::proof_of_intersection::check_private_set_intersection(commitmentA, commitmentB, setA, setB, !isNotEmpty);
-    std::println("It's a match!");
+    fruity_lib::proof_of_proper_secret::check_secret_is_proper(password_as_hashed_chars_array, nb_of_char_types_required);
+    std::println("Proper!");
     // ...
 }
