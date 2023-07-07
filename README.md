@@ -7,9 +7,9 @@ A public Noir library repo containing useful Noir functions we've implemented an
 
 ## Examples
 
-1. An example of how to use the Proof of Intersection function `fruity_lib::check_private_set_intersection` is available in `examples/proof-of-intersection/`.
-2. An example of how to use the Proof of Proximity function `fruity_lib::check_points_proximity` is available in `examples/proof-of-proximity/`.
-3. An example of how to use the Proof of Proper Secret function `fruity_lib::check_secret_is_proper` is available in `examples/proof-of-proper_secret/`.
+1. An example of how to use the Proof of Intersection function `fruity_lib::proof-of-intersection::check_private_set_intersection` is available in `examples/proof-of-intersection/`.
+2. An example of how to use the Proof of Proximity function `fruity_lib::proof-of-proximity::check_points_proximity` is available in `examples/proof-of-proximity/`.
+3. An example of how to use the Proof of Proper Secret function `fruity_lib::proof-of-proper_secret::check_secret_is_proper` is available in `examples/proof-of-proper_secret/`.
 
 ## Using the library
 
