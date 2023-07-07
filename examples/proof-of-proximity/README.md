@@ -2,7 +2,7 @@
 
 ## Check Euclidean Distance example
 
-This mini-project illustrates how to import and use `check_points_proximity(commitment_a, commitment_b, private_point_a, private_point_b, distance_threshold)` from `fruity_lib` public Noir library.
+This mini-project illustrates how to import and use `check_points_proximity(commitment_a, commitment_b, private_point_a, private_point_b, distance_threshold)` from `fruity_lib` public Noir library (`fruity_lib::proof_of_proximity` module).
 
 ## Run the proof generation & verification
 

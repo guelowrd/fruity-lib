@@ -2,7 +2,7 @@
 
 ## Check Private Set Intersection (PSI) example
 
-This mini-project illustrates how to import and use `check_private_set_intersection(commitment_a, commitment_b, private_set_a, private_set_b, intersection_is_empty)` from `fruity_lib` public Noir library.
+This mini-project illustrates how to import and use `check_private_set_intersection(commitment_a, commitment_b, private_set_a, private_set_b, intersection_is_empty)` from `fruity_lib` public Noir library (`fruity_lib::proof_of_intersection` module).
 
 ## Run the proof generation & verification
 
