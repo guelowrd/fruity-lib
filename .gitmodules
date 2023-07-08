@@ -1,0 +1,7 @@
+[submodule "proof-of-intersection"]
+	path = proof-of-intersection
+	url = https://github.com/fruity-labs/proof-of-intersection
+[submodule "proof-of-proximity"]
+	path = proof-of-proximity
+[submodule "proof-of-proper-secret"]
+	path = proof-of-proper-secret

@@ -1,23 +1,17 @@
 # Noir library by Wagmi Labs*
 
-A public Noir library repo containing useful Noir functions we've implemented and we're using in our apps:
+This is only a hub redirecting to the repos where we've implemented useful Noir functions that we're using in our apps:
 1. Proof of Intersection
 2. Proof of Proximity
 3. Proof of Proper Secret
 
-## Examples
-
-1. An example of how to use the Proof of Intersection function `fruity_lib::proof_of_intersection::check_private_set_intersection` is available in `examples/proof-of-intersection/`.
-2. An example of how to use the Proof of Proximity function `fruity_lib::proof_of_proximity::check_points_proximity` is available in `examples/proof-of-proximity/`.
-3. An example of how to use the Proof of Proper Secret function `fruity_lib::proof_of_proper_secret::check_secret_is_proper` is available in `examples/proof-of-proper_secret/`.
-
 ## Using the library
 
-1. Add the library to your Noir project dependencies in the `Nargo.toml` file.
+1. Add the library to your Noir project dependencies in the `Nargo.toml` file, e.g. for `proof_of_intersection`
 
 ```toml
 [dependencies]
-fruity_lib = {tag = "v1.2.2", git = "https://github.com/guelowrd/fruity-lib"}
+proof_of_intersection = {tag = "v1.0.0", git = "https://github.com/fruity-labs/proof-of-intersection"}
 ```
 
 2. Import the library and function into your Noir code.
@@ -25,11 +19,11 @@ fruity_lib = {tag = "v1.2.2", git = "https://github.com/guelowrd/fruity-lib"}
 Example (taken from proof-of-intersection):
 ```rust
 use dep::std;
-use dep::fruity_lib;
+use dep::proof_of_intersection;
 
 fn main(){
     // ...
-    let it_s_a_match = fruity_lib::private_set_intersection_is_not_empty(commitment_a, commitment_b, priv_set_a, priv_set_b, intersection_is_empty);
+    let it_s_a_match = proof_of_intersection::private_set_intersection_is_not_empty(commitment_a, commitment_b, priv_set_a, priv_set_b, intersection_is_empty);
     std::println(it_s_a_match);
     // ...
 }
