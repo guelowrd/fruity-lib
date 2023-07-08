@@ -3,5 +3,7 @@
 	url = https://github.com/fruity-labs/proof-of-intersection
 [submodule "proof-of-proximity"]
 	path = proof-of-proximity
+	url = https://github.com/fruity-labs/proof-of-proximity
 [submodule "proof-of-proper-secret"]
 	path = proof-of-proper-secret
+	url = https://github.com/fruity-labs/proof-of-proper-secret
